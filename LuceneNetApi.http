@@ -1,0 +1,6 @@
+@LuceneNetApi_HostAddress = http://localhost:5209
+
+GET {{LuceneNetApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

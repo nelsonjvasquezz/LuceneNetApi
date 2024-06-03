@@ -1,0 +1,56 @@
+[
+  {
+    "codigo": 1,
+    "tipoDocumentoCodigo": 3,
+    "areaCodigo": 4,
+    "titulo": "Consulta generica",
+    "descripcion": "Documento generado a partir de una consulta generica",
+    "palabrasClave": "consulta, generica, documento",
+    "modoAsociacionPermisosDb": "test"
+  },
+  {
+    "codigo": 2,
+    "tipoDocumentoCodigo": 3,
+    "areaCodigo": 5,
+    "titulo": "Reporte financiero",
+    "descripcion": "Documento que contiene el reporte financiero del trimestre",
+    "palabrasClave": "reporte, financiero, trimestre, documento",
+    "modoAsociacionPermisosDb": "finanzas"
+  },
+  {
+    "codigo": 3,
+    "tipoDocumentoCodigo": 1,
+    "areaCodigo": 4,
+    "titulo": "Plan de marketing",
+    "descripcion": "Documento detallado sobre el plan de marketing anual",
+    "palabrasClave": "plan, marketing, anual, documento",
+    "modoAsociacionPermisosDb": "marketing"
+  },
+  {
+    "codigo": 4,
+    "tipoDocumentoCodigo": 4,
+    "areaCodigo": 2,
+    "titulo": "Manual de usuario para el uso correcto de Windows 10",
+    "descripcion": "Guia completa para el uso del software",
+    "palabrasClave": "manual, usuario, guia, documento",
+    "modoAsociacionPermisosDb": "soporte"
+  },
+  {
+    "codigo": 5,
+    "tipoDocumentoCodigo": 3,
+    "areaCodigo": 1,
+    "titulo": "Politicas de la empresa para el manejo de sofware",
+    "descripcion": "Documento con las politicas y procedimientos de la empresa",
+    "palabrasClave": "politicas, procedimientos, empresa",
+    "modoAsociacionPermisosDb": "administraci�n"
+  },
+  {
+    "codigo": 6,
+    "tipoDocumentoCodigo": 5,
+    "areaCodigo": 3,
+    "titulo": "Informe de investigacion",
+    "descripcion": "Resultado del estudio de mercado realizado en el ultimo semestre",
+    "palabrasClave": "informe, investigacion, mercado",
+    "modoAsociacionPermisosDb": "investigacion"
+  }
+]
