@@ -1,5 +1,4 @@
-﻿using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
+﻿using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers.Classic;
@@ -8,9 +7,6 @@ using Lucene.Net.Store;
 using Lucene.Net.Util;
 using LuceneNetApi.Models;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml;
 
 namespace LuceneNetApi.Services
 {
@@ -18,18 +14,17 @@ namespace LuceneNetApi.Services
     {
         private const LuceneVersion _luceneVersion = LuceneVersion.LUCENE_48;
         private readonly string _indexPath;
-        private readonly Analyzer _analyzer;
 
         public LuceneService(string indexPath)
         {
             _indexPath = indexPath;
-            _analyzer = new StandardAnalyzer(_luceneVersion);
         }
 
         public void CreateIndex(IEnumerable<DocumentoGestionado> documentos)
         {
             using var directory = FSDirectory.Open(_indexPath);
-            var config = new IndexWriterConfig(_luceneVersion, _analyzer)
+            using var analyzer = new StandardAnalyzer(_luceneVersion);
+            var config = new IndexWriterConfig(_luceneVersion, analyzer)
             {
                 OpenMode = OpenMode.CREATE // Set the OpenMode to CREATE to delete existing index
             };
@@ -61,8 +56,8 @@ namespace LuceneNetApi.Services
         {
             using var directory = FSDirectory.Open(_indexPath);
             using var reader = DirectoryReader.Open(directory);
+            using var analyzer = new StandardAnalyzer(_luceneVersion);
             var searcher = new IndexSearcher(reader);
-            var analyzer = new StandardAnalyzer(_luceneVersion);
 
             // Crear la consulta principal
             var mainQuery = new BooleanQuery();
