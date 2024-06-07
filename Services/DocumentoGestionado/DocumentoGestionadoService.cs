@@ -6,25 +6,33 @@ using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Lucene.Net.Util;
 using LuceneNetApi.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace LuceneNetApi.Services
 {
-    public class LuceneService : ILuceneService
+    public class DocumentoGestionadoService : IDocumentoGestionadoService
     {
-        private const LuceneVersion _luceneVersion = LuceneVersion.LUCENE_48;
         private readonly string _indexPath;
 
-        public LuceneService(string indexPath)
+        public LuceneVersion LuceneVersion => LuceneVersion.LUCENE_48;
+
+        public DocumentoGestionadoService(string indexPath)
         {
             _indexPath = indexPath;
         }
 
-        public void CreateIndex(IEnumerable<DocumentoGestionado> documentos)
+        public bool CanCreateIt(string indexName)
         {
+            throw new System.NotImplementedException();
+        }
+
+        public void CreateIndex()
+        {
+            var documentos = GetDocumentosGestionados();
             using var directory = FSDirectory.Open(_indexPath);
-            using var analyzer = new StandardAnalyzer(_luceneVersion);
-            var config = new IndexWriterConfig(_luceneVersion, analyzer)
+            using var analyzer = new StandardAnalyzer(LuceneVersion);
+            var config = new IndexWriterConfig(LuceneVersion, analyzer)
             {
                 OpenMode = OpenMode.CREATE // Set the OpenMode to CREATE to delete existing index
             };
@@ -52,11 +60,19 @@ namespace LuceneNetApi.Services
             writer.Flush(triggerMerge: false, applyAllDeletes: false);
         }
 
+        private IEnumerable<DocumentoGestionado> GetDocumentosGestionados()
+        {
+            var json = System.IO.File.ReadAllText("documentsData.json");
+            var documentos = JsonConvert.DeserializeObject<List<DocumentoGestionado>>(json);
+
+            return documentos;
+        }
+
         public IEnumerable<DocumentoGestionado> Search(string searchTerms, int documentLimit, int? areaCodigo = null, int? tipoDocumentoCodigo = null)
         {
             using var directory = FSDirectory.Open(_indexPath);
             using var reader = DirectoryReader.Open(directory);
-            using var analyzer = new StandardAnalyzer(_luceneVersion);
+            using var analyzer = new StandardAnalyzer(LuceneVersion);
             var searcher = new IndexSearcher(reader);
 
             // Crear la consulta principal
@@ -64,8 +80,8 @@ namespace LuceneNetApi.Services
 
             if (!string.IsNullOrWhiteSpace(searchTerms))
             {
-                var titleQuery = new QueryParser(_luceneVersion, "doc_titulo", analyzer).Parse(searchTerms);
-                var keywordsQuery = new QueryParser(_luceneVersion, "doc_palabras_claves", analyzer).Parse(searchTerms);
+                var titleQuery = new QueryParser(LuceneVersion, "doc_titulo", analyzer).Parse(searchTerms);
+                var keywordsQuery = new QueryParser(LuceneVersion, "doc_palabras_claves", analyzer).Parse(searchTerms);
 
                 mainQuery.Add(titleQuery, Occur.SHOULD);
                 mainQuery.Add(keywordsQuery, Occur.SHOULD);

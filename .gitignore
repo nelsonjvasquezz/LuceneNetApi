@@ -275,3 +275,5 @@ __pycache__/
 
 # Ignore Lucene Index files
 DocumentosGestionados/lucene_index/
+Expedientes/lucene_index/
+Candidatos/lucene_index/

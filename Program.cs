@@ -13,9 +13,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ILuceneService>(
-    new LuceneService(
+builder.Services.AddSingleton<IDocumentoGestionadoService>(
+    new DocumentoGestionadoService(
         Path.Combine(builder.Environment.ContentRootPath, "DocumentosGestionados", "lucene_index")));
+builder.Services.AddSingleton<IIndexService>(
+    new ExpedienteService(
+        Path.Combine(builder.Environment.ContentRootPath, "Expedientes", "lucene_index")));
+builder.Services.AddSingleton<IIndexService>(
+    new CandidatoService(
+        Path.Combine(builder.Environment.ContentRootPath, "Candidatos", "lucene_index")));
 
 var app = builder.Build();
 
